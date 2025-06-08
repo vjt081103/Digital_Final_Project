@@ -1,0 +1,28 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_unsigned.ALL;
+USE ieee.numeric_std.ALL;
+USE work.mypackage.ALL;
+
+ENTITY counter IS
+    PORT (
+        reset : IN STD_LOGIC := '0';
+        clk : IN STD_LOGIC;
+        number : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+        en : IN STD_LOGIC
+    );
+END ENTITY;
+
+ARCHITECTURE behavior OF counter IS
+    SIGNAL number_proc : INTEGER := 0;
+BEGIN
+    PROCESS (reset, clk)
+    BEGIN
+        IF (reset = '1') THEN
+            number_proc = 0;
+        ELSIF (clk'event AND clk = '1') THEN
+            number_proc <= number_proc + 1;
+        END IF;
+    END PROCESS;
+    number <= Std_logic_vector(to_unsigned(number_proc,n));
+END behavior;

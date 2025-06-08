@@ -1,0 +1,16 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY compare IS
+    PORT (
+        a : IN STD_LOGIC;
+        b : IN STD_LOGIC;
+        y : OUT STD_LOGIC
+    );
+END ENTITY;
+
+ARCHITECTURE behavior OF compare IS
+BEGIN
+    y <= '1' WHEN (a = b) ELSE
+         '0';
+END behavior;

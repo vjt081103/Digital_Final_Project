@@ -1,0 +1,16 @@
+address_src: address_src_i;
+address_des: address_des_i;
+M: M_i;
+N: N_i;
+
+data_out: data_out + data_in;
+
+address_read: address_src;
+address_read: address_src + (i - 1) * M + (j - 1);
+address_read: address_des + (i * M + j) * 3
+
+
+address_read: address_src; stage = 0;
+address_read: address_des + j: stage = 1;
+address_read: address_read + 1; stage = 0
+address_read: address_read + M: stage = 1;

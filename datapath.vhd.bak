@@ -1,0 +1,11 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE work.mypackage.ALL;
+
+ENTITY datapath IS
+    PORT ();
+END datapath;
+
+ARCHITECTURE behavior OF datapath IS
+BEGIN
+END behavior;

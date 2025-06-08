@@ -1,0 +1,17 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+USE work.mypackage.ALL;
+
+ENTITY adder IS
+    PORT (
+        a : IN STD_LOGIC_VECTOR(3 * n - 1 DOWNTO 0);
+        b : IN STD_LOGIC_VECTOR(3 * n - 1 DOWNTO 0);
+        c : OUT STD_LOGIC_VECTOR(3 * n - 1 DOWNTO 0)
+    );
+END adder;
+
+ARCHITECTURE behavior OF adder IS
+BEGIN
+    c <= STD_LOGIC_VECTOR(to_unsigned(a) + to_unsigned(b));
+END behavior;

@@ -1,0 +1,23 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+USE work.mypackage.ALL;
+ENTITY adder_tb IS
+END adder_tb;
+
+ARCHITECTURE behavior OF adder_tb IS
+    SIGNAL a : STD_LOGIC_VECTOR(23 DOWNTO 0);
+    SIGNAL b : STD_LOGIC_VECTOR(23 DOWNTO 0);
+    SIGNAL c : STD_LOGIC_VECTOR(23 DOWNTO 0);
+BEGIN
+    dut : adder GENERIC MAP(24) PORT MAP(a, b, c);
+    stim_proc : PROCESS
+    BEGIN
+        a <= X"1BA0C4";
+        b <= X"2ED567";
+        WAIT FOR 20 ns;
+        a <= X"678900";
+        b <= X"2dc879";
+        WAIT;
+    END PROCESS;
+END behavior;

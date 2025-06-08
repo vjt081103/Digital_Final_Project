@@ -1,0 +1,44 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+PACKAGE mypackage IS
+    CONSTANT n : INTEGER := 9;
+    CONSTANT half_clk_period : TIME := 10 ns;
+    CONSTANT data_width : INTEGER := 16;
+
+    COMPONENT compare IS
+        PORT (
+            a : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            b : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            y : OUT STD_LOGIC
+        );
+    END COMPONENT;
+
+    COMPONENT regn IS
+        PORT (
+            clr : IN STD_LOGIC;
+            clk : IN STD_LOGIC;
+            en : IN STD_LOGIC;
+            d : IN STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+            q : OUT STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0)
+        );
+    END COMPONENT;
+
+    COMPONENT counter IS
+        PORT (
+            reset : IN STD_LOGIC := '0';
+            clk : IN STD_LOGIC;
+            number : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            en : IN STD_LOGIC
+        );
+    END COMPONENT;
+
+    COMPONENT adder IS
+        PORT (
+            a : IN STD_LOGIC_VECTOR (3 * n - 1 DOWNTO 0);
+            b : IN STD_LOGIC_VECTOR (3 * n - 1 DOWNTO 0);
+            c : IN STD_LOGIC_VECTOR (3 * n - 1 DOWNTO 0)
+        );
+    END COMPONENT;
+
+END mypackage;
