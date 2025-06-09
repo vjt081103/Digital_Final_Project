@@ -6,7 +6,8 @@ ENTITY controller IS
     GENERIC (
         input_width : INTEGER := 8;
         data_read_width : INTEGER := 8;
-        data_write_width : INTEGER := 8
+        data_write_width : INTEGER := 8;
+        address_width : INTEGER := 32
     );
 
     PORT (

@@ -2,7 +2,7 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
 PACKAGE mypackage IS
-    TYPE mem128 IS ARRAY (0 TO 127) OF STD_LOGIC_VECTOR(7 DOWNTO 0);
+    TYPE mem256 IS ARRAY (0 TO 255) OF STD_LOGIC_VECTOR(7 DOWNTO 0);
     CONSTANT half_clk_period : TIME := 10 ns;
     CONSTANT clk_period : TIME := 20 ns;
     CONSTANT data_width : INTEGER := 8;
@@ -81,7 +81,8 @@ PACKAGE mypackage IS
         GENERIC (
             input_width : INTEGER := 8;
             data_read_width : INTEGER := 8;
-            data_write_width : INTEGER := 8
+            data_write_width : INTEGER := 8;
+            address_width : INTEGER := 32
         );
 
         PORT (
@@ -129,7 +130,8 @@ PACKAGE mypackage IS
         GENERIC (
             input_width : INTEGER := 8;
             data_read_width : INTEGER := 8;
-            data_write_width : INTEGER := 8
+            data_write_width : INTEGER := 8;
+            address_width : INTEGER := 32
         );
         PORT (
             clr : IN STD_LOGIC := '0';
@@ -140,8 +142,8 @@ PACKAGE mypackage IS
             m_load : IN STD_LOGIC := '0';
             n_load : IN STD_LOGIC := '0';
             --
-            address_src_i : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-            address_des_i : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+            address_src_i : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+            address_des_i : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
             address_src_load : IN STD_LOGIC := '0';
             address_des_load : IN STD_LOGIC := '0';
             --
@@ -162,8 +164,8 @@ PACKAGE mypackage IS
             data_in_load : IN STD_LOGIC;
             data_in_sel : IN STD_LOGIC;
             --
-            address_read : BUFFER STD_LOGIC_VECTOR(7 DOWNTO 0);
-            address_write : BUFFER STD_LOGIC_VECTOR(7 DOWNTO 0);
+            address_read : BUFFER STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+            address_write : BUFFER STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
             address_read_load : IN STD_LOGIC;
             address_write_load : IN STD_LOGIC;
             address_read_sel : IN STD_LOGIC_VECTOR(1 DOWNTO 0);

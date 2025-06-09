@@ -16,7 +16,7 @@ ARCHITECTURE behavior OF threetimes IS
     SIGNAL data_out_sup : STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
 
 BEGIN
-    data_in_shift <= data_in(6 DOWNTO 0) & '0';
+    data_in_shift <= data_in(data_width - 2 DOWNTO 0) & '0';
     dut : adder
     GENERIC MAP(data_width)
     PORT MAP(data_in_shift, data_in, data_out_sup);

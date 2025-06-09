@@ -4,35 +4,39 @@ USE work.mypackage.ALL;
 USE ieee.numeric_std.ALL;
 
 ENTITY memory IS
+    GENERIC (
+        data_width : INTEGER := 8;
+        address_width : INTEGER := 32
+    );
     PORT (
         clr : IN STD_LOGIC := '0';
         clk : IN STD_LOGIC := '1';
-        address_read : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        address_read : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
         address_read_check : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
         address_write_init : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
-        address_write : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        address_write : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
         --
         read_en : IN STD_LOGIC := '1';
         read_check_en : IN STD_LOGIC := '1';
         write_init_en : IN STD_LOGIC;
         write_en : IN STD_LOGIC := '0';
-        data_read : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
-        data_write : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+        data_read : OUT STD_LOGIC_VECTOR (data_width - 1 DOWNTO 0);
+        data_write : IN STD_LOGIC_VECTOR (data_width - 1 DOWNTO 0);
 
-        data_init : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        data_init : IN STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
         decide : IN STD_LOGIC
     );
 END ENTITY;
 
 ARCHITECTURE behavior OF memory IS
-    SIGNAL d : mem128;
-    SIGNAL q : mem128;
-    SIGNAL init_d : mem128;
-    SIGNAL en : STD_LOGIC_VECTOR (127 DOWNTO 0);
-    SIGNAL sub_out : STD_LOGIC_VECTOR (7 DOWNTO 0);
+    SIGNAL d : mem256;
+    SIGNAL q : mem256;
+    SIGNAL init_d : mem256;
+    SIGNAL en : STD_LOGIC_VECTOR (255 DOWNTO 0);
+    SIGNAL sub_out : STD_LOGIC_VECTOR (data_width - 1 DOWNTO 0);
     SIGNAL sup_read_en : STD_LOGIC;
 BEGIN
-    generate_regs : FOR i IN 0 TO 127 GENERATE
+    generate_regs : FOR i IN 0 TO 255 GENERATE
         reg_i : mem_regn GENERIC MAP(8) PORT MAP(clr, clk, decide, en(i), init_d(i), d(i), q(i));
     END GENERATE;
     reg_out : regn GENERIC MAP(8) PORT MAP(clr, clk, sup_read_en, sub_out, data_read);
@@ -43,8 +47,8 @@ BEGIN
         VARIABLE num_address_write_init : INTEGER := 0;
         VARIABLE num_address_read_check : INTEGER := 0;
     BEGIN
-        num_address_read := to_integer(unsigned(address_read));
-        num_address_write := to_integer(unsigned(address_write));
+        num_address_read := to_integer(unsigned(address_read(7 DOWNTO 0)));
+        num_address_write := to_integer(unsigned(address_write(7 DOWNTO 0)));
         num_address_write_init := to_integer(unsigned(address_write_init));
         num_address_read_check := to_integer(unsigned(address_read_check));
         en <= (OTHERS => '0');

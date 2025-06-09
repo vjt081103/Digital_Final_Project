@@ -10,11 +10,13 @@ ARCHITECTURE behavior OF integral_tb IS
     CONSTANT input_width : INTEGER := 8;
     CONSTANT data_read_width : INTEGER := 8;
     CONSTANT data_write_width : INTEGER := 8;
+    CONSTANT address_width : INTEGER := 32;
     COMPONENT integral IS
         GENERIC (
             input_width : INTEGER := 8;
             data_read_width : INTEGER := 8;
-            data_write_width : INTEGER := 8
+            data_write_width : INTEGER := 8;
+            address_width : INTEGER := 32
         );
         PORT (
             clr : IN STD_LOGIC;
@@ -23,16 +25,16 @@ ARCHITECTURE behavior OF integral_tb IS
             m_i : IN STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
             n_i : IN STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
             --
-            address_src_i : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-            address_des_i : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+            address_src_i : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+            address_des_i : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
             start : IN STD_LOGIC;
             done : OUT STD_LOGIC;
             --
             read_en : OUT STD_LOGIC;
             write_en : OUT STD_LOGIC;
             --
-            address_read : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-            address_write : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+            address_read : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+            address_write : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
             --
             data_read : IN STD_LOGIC_VECTOR(data_read_width - 1 DOWNTO 0);
             data_write : OUT STD_LOGIC_VECTOR (data_write_width - 1 DOWNTO 0)
@@ -40,22 +42,26 @@ ARCHITECTURE behavior OF integral_tb IS
     END COMPONENT;
 
     COMPONENT memory IS
+        GENERIC (
+            data_width : INTEGER := 8;
+            address_width : INTEGER := 32
+        );
         PORT (
-            clr : IN STD_LOGIC;
-            clk : IN STD_LOGIC;
-            address_read : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+            clr : IN STD_LOGIC := '0';
+            clk : IN STD_LOGIC := '1';
+            address_read : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
             address_read_check : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
-            address_write_init : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-            address_write : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+            address_write_init : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+            address_write : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
             --
-            read_en : IN STD_LOGIC;
-            read_check_en : IN STD_LOGIC;
+            read_en : IN STD_LOGIC := '1';
+            read_check_en : IN STD_LOGIC := '1';
             write_init_en : IN STD_LOGIC;
-            write_en : IN STD_LOGIC;
-            data_read : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
-            data_write : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
-            --
-            data_init : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+            write_en : IN STD_LOGIC := '0';
+            data_read : OUT STD_LOGIC_VECTOR (data_width - 1 DOWNTO 0);
+            data_write : IN STD_LOGIC_VECTOR (data_width - 1 DOWNTO 0);
+
+            data_init : IN STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
             decide : IN STD_LOGIC
         );
     END COMPONENT;
@@ -65,16 +71,16 @@ ARCHITECTURE behavior OF integral_tb IS
     SIGNAL m_i : STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
     SIGNAL n_i : STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
     --
-    SIGNAL address_src_i : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL address_des_i : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL address_src_i : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    SIGNAL address_des_i : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
     SIGNAL start : STD_LOGIC;
     SIGNAL done : STD_LOGIC;
     --
     SIGNAL read_en : STD_LOGIC;
     SIGNAL write_en : STD_LOGIC;
     --
-    SIGNAL address_read : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL address_write : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL address_read : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    SIGNAL address_write : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
     SIGNAL address_write_init : STD_LOGIC_VECTOR(7 DOWNTO 0);
     --
     SIGNAL data_read : STD_LOGIC_VECTOR(data_read_width - 1 DOWNTO 0);
@@ -90,7 +96,8 @@ BEGIN
     (
         input_width,
         data_read_width,
-        data_write_width
+        data_write_width,
+        address_width
     )
     PORT MAP
     (
@@ -110,6 +117,10 @@ BEGIN
         data_write
     );
     memory_dut : memory
+    GENERIC MAP(
+        data_read_width,
+        address_width
+    )
     PORT MAP(
         clr,
         clk,
@@ -192,10 +203,10 @@ BEGIN
     stim_proc : PROCESS
     BEGIN
         WAIT FOR 3000 ns;
-        m_i <= STD_LOGIC_VECTOR(to_unsigned(3, 8));
-        n_i <= STD_LOGIC_VECTOR(to_unsigned(3, 8));
-        address_src_i <= STD_LOGIC_VECTOR(to_unsigned(0, 8));
-        address_des_i <= STD_LOGIC_VECTOR(to_unsigned(20, 8));
+        m_i <= STD_LOGIC_VECTOR(to_unsigned(3, input_width));
+        n_i <= STD_LOGIC_VECTOR(to_unsigned(3, input_width));
+        address_src_i <= STD_LOGIC_VECTOR(to_unsigned(0, address_width));
+        address_des_i <= STD_LOGIC_VECTOR(to_unsigned(20, address_width));
         start <= '1';
         WAIT UNTIL (done = '1');
         start <= '0';

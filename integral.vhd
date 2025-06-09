@@ -6,7 +6,8 @@ ENTITY integral IS
     GENERIC (
         input_width : INTEGER := 8;
         data_read_width : INTEGER := 8;
-        data_write_width : INTEGER := 8
+        data_write_width : INTEGER := 8;
+        address_width : INTEGER := 32
     );
     PORT (
         clr : IN STD_LOGIC := '0';
@@ -15,16 +16,16 @@ ENTITY integral IS
         m_i : IN STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
         n_i : IN STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
         --
-        address_src_i : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-        address_des_i : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        address_src_i : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+        address_des_i : IN STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
         start : IN STD_LOGIC;
         done : OUT STD_LOGIC;
         --
         read_en : OUT STD_LOGIC;
         write_en : OUT STD_LOGIC;
         --
-        address_read : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-        address_write : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+        address_read : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+        address_write : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
         --
         data_read : IN STD_LOGIC_VECTOR(data_read_width - 1 DOWNTO 0);
         data_write : OUT STD_LOGIC_VECTOR (data_write_width - 1 DOWNTO 0)
@@ -68,7 +69,8 @@ BEGIN
     (
         input_width,
         data_read_width,
-        data_write_width
+        data_write_width,
+        address_width
     )
     PORT MAP
     (
@@ -117,7 +119,8 @@ BEGIN
     (
         input_width,
         data_read_width,
-        data_write_width
+        data_write_width,
+        address_width
     )
     PORT MAP
     (
