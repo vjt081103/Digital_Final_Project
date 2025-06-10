@@ -100,36 +100,7 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity regn
 -- Compiling architecture behavior of regn
 
-} {} {}} E:/Working/FinalProject/datapath_tb.vhd {0 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/datapath_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Loading package mypackage
--- Compiling entity datapath_tb
--- Compiling architecture behavior of datapath_tb
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): Signal "i_load" is type ieee.std_logic_1164.STD_LOGIC; expecting type ieee.std_logic_1164.STD_LOGIC_VECTOR.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): Signal "j_load" is type ieee.std_logic_1164.STD_LOGIC; expecting type ieee.std_logic_1164.STD_LOGIC_VECTOR.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "mem_num_increase" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "i_increase" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "j_increase" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "data_out_set_0" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "i_set_0" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "j_set_0" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "mem_num_set_0" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "sup_data_in_load" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "data_in_load" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "data_in_sel" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "address_read_load" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "address_write_load" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "address_read_sel" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "address_write_sel" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "address_read_step_sel" has OPEN or no actual associated with it.
-** Error: E:/Working/FinalProject/datapath_tb.vhd(28): (vcom-1035) Formal port "address_write_step_sel" has OPEN or no actual associated with it.
-** Note: E:/Working/FinalProject/datapath_tb.vhd(55): VHDL Compiler exiting
-
-} {10.0 28.0} {}} E:/Working/FinalProject/counter_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/counter_tb.vhd
+} {} {}} E:/Working/FinalProject/counter_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/counter_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -148,14 +119,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity memory_tb
 -- Compiling architecture behavior of memory_tb
 
-} {} {}} E:/Working/FinalProject/datapath.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/datapath.vhd
+} {} {}} E:/Working/FinalProject/mem_regn_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/mem_regn_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package mypackage
--- Compiling entity datapath
--- Compiling architecture behavior of datapath
+-- Loading package NUMERIC_STD
+-- Compiling entity mem_regn_tb
+-- Compiling architecture behavior of mem_regn_tb
 
 } {} {}} E:/Working/FinalProject/threetimes_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/threetimes_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -167,15 +139,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity threetimes_tb
 -- Compiling architecture behavior of threetimes_tb
 
-} {} {}} E:/Working/FinalProject/mem_regn_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/mem_regn_tb.vhd
+} {} {}} E:/Working/FinalProject/datapath.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/datapath.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package mypackage
--- Loading package NUMERIC_STD
--- Compiling entity mem_regn_tb
--- Compiling architecture behavior of mem_regn_tb
+-- Compiling entity datapath
+-- Compiling architecture behavior of datapath
 
 } {} {}} E:/Working/FinalProject/adder.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/adder.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -187,16 +158,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity adder
 -- Compiling architecture behavior of adder
 
-} {} {}} E:/Working/FinalProject/memory.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/memory.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package mypackage
--- Loading package NUMERIC_STD
--- Compiling entity memory
--- Compiling architecture behavior of memory
-
 } {} {}} E:/Working/FinalProject/regn_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/regn_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -206,9 +167,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity regn_tb
 -- Compiling architecture behavior of regn_tb
 
-} {} {}} E:/Working/FinalProject/controller_tb.vhd {0 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/controller_tb.vhd
+} {} {}} E:/Working/FinalProject/memory.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/memory.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
-** Error (suppressible): E:/Working/FinalProject/controller_tb.vhd(2): (vcom-1491) Empty source files.
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package mypackage
+-- Loading package NUMERIC_STD
+-- Compiling entity memory
+-- Compiling architecture behavior of memory
 
 } {} {}}

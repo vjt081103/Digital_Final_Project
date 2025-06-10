@@ -6,9 +6,8 @@ PACKAGE mypackage IS
     CONSTANT half_clk_period : TIME := 10 ns;
     CONSTANT clk_period : TIME := 20 ns;
     CONSTANT data_width : INTEGER := 8;
-    CONSTANT input_width : INTEGER := 8;
-    CONSTANT sum_width : INTEGER := 8 + 8 + 8;
-    CONSTANT loop_width : INTEGER := 8 + 1;
+    CONSTANT input_width : INTEGER := 9;
+    CONSTANT address_width : INTEGER := 32;
 
     COMPONENT mem_regn IS
         GENERIC (
@@ -79,9 +78,8 @@ PACKAGE mypackage IS
 
     COMPONENT controller IS
         GENERIC (
-            input_width : INTEGER := 8;
-            data_read_width : INTEGER := 8;
-            data_write_width : INTEGER := 8;
+            input_width : INTEGER := 9;
+            data_width : INTEGER := 8;
             address_width : INTEGER := 32
         );
 
@@ -128,9 +126,8 @@ PACKAGE mypackage IS
     END COMPONENT;
     COMPONENT datapath IS
         GENERIC (
-            input_width : INTEGER := 8;
-            data_read_width : INTEGER := 8;
-            data_write_width : INTEGER := 8;
+            input_width : INTEGER := 9;
+            data_width : INTEGER := 8;
             address_width : INTEGER := 32
         );
         PORT (
@@ -148,8 +145,8 @@ PACKAGE mypackage IS
             address_des_load : IN STD_LOGIC := '0';
             --
             data_out_load : IN STD_LOGIC;
-            data_read : IN STD_LOGIC_VECTOR(data_read_width - 1 DOWNTO 0);
-            data_write : OUT STD_LOGIC_VECTOR (data_write_width - 1 DOWNTO 0);
+            data_read : IN STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+            data_write : OUT STD_LOGIC_VECTOR (data_width - 1 DOWNTO 0);
             mem_num_increase : IN STD_LOGIC;
             i_increase : IN STD_LOGIC;
             j_increase : IN STD_LOGIC;
@@ -164,8 +161,8 @@ PACKAGE mypackage IS
             data_in_load : IN STD_LOGIC;
             data_in_sel : IN STD_LOGIC;
             --
-            address_read : BUFFER STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
-            address_write : BUFFER STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+            address_read : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+            address_write : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
             address_read_load : IN STD_LOGIC;
             address_write_load : IN STD_LOGIC;
             address_read_sel : IN STD_LOGIC_VECTOR(1 DOWNTO 0);

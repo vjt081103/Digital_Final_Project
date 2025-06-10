@@ -4,9 +4,8 @@ USE work.mypackage.ALL;
 
 ENTITY integral IS
     GENERIC (
-        input_width : INTEGER := 8;
-        data_read_width : INTEGER := 8;
-        data_write_width : INTEGER := 8;
+        input_width : INTEGER := 9;
+        data_width : INTEGER := 8;
         address_width : INTEGER := 32
     );
     PORT (
@@ -27,8 +26,8 @@ ENTITY integral IS
         address_read : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
         address_write : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
         --
-        data_read : IN STD_LOGIC_VECTOR(data_read_width - 1 DOWNTO 0);
-        data_write : OUT STD_LOGIC_VECTOR (data_write_width - 1 DOWNTO 0)
+        data_read : IN STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+        data_write : OUT STD_LOGIC_VECTOR (data_width - 1 DOWNTO 0)
     );
 END integral;
 ARCHITECTURE behavior OF integral IS
@@ -68,8 +67,7 @@ BEGIN
     GENERIC MAP
     (
         input_width,
-        data_read_width,
-        data_write_width,
+        data_width,
         address_width
     )
     PORT MAP
@@ -118,8 +116,7 @@ BEGIN
     GENERIC MAP
     (
         input_width,
-        data_read_width,
-        data_write_width,
+        data_width,
         address_width
     )
     PORT MAP

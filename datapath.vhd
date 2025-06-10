@@ -4,9 +4,8 @@ USE work.mypackage.ALL;
 
 ENTITY datapath IS
     GENERIC (
-        input_width : INTEGER := 8;
-        data_read_width : INTEGER := 8;
-        data_write_width : INTEGER := 8;
+        input_width : INTEGER := 9;
+        data_width : INTEGER := 8;
         address_width : INTEGER := 32
     );
     PORT (
@@ -24,8 +23,8 @@ ENTITY datapath IS
         address_des_load : IN STD_LOGIC := '0';
         --
         data_out_load : IN STD_LOGIC;
-        data_read : IN STD_LOGIC_VECTOR(data_read_width - 1 DOWNTO 0);
-        data_write : OUT STD_LOGIC_VECTOR (data_write_width - 1 DOWNTO 0);
+        data_read : IN STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+        data_write : OUT STD_LOGIC_VECTOR (data_width - 1 DOWNTO 0);
         mem_num_increase : IN STD_LOGIC;
         i_increase : IN STD_LOGIC;
         j_increase : IN STD_LOGIC;
@@ -40,8 +39,8 @@ ENTITY datapath IS
         data_in_load : IN STD_LOGIC;
         data_in_sel : IN STD_LOGIC;
         --
-        address_read : BUFFER STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
-        address_write : BUFFER STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+        address_read : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+        address_write : OUT STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
         address_read_load : IN STD_LOGIC;
         address_write_load : IN STD_LOGIC;
         address_read_sel : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
@@ -65,15 +64,16 @@ ARCHITECTURE behavior OF datapath IS
     SIGNAL m_add_1 : STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
     SIGNAL n_add_1 : STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
     SIGNAL one_cal_input_width : STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
-    SIGNAL data_out : STD_LOGIC_VECTOR(data_write_width * 3 - 1 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL data_out_sup : STD_LOGIC_VECTOR(data_write_width * 3 - 1 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL data_out : STD_LOGIC_VECTOR(data_width * 4 - 1 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL data_out_sup : STD_LOGIC_VECTOR(data_width * 4 - 1 DOWNTO 0) := (OTHERS => '0');
     SIGNAL data_out_reset : STD_LOGIC;
     --
-    SIGNAL data_in : STD_LOGIC_VECTOR(data_read_width * 3 - 1 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL data_in1 : STD_LOGIC_VECTOR(data_read_width - 1 DOWNTO 0);
-    SIGNAL data_in2 : STD_LOGIC_VECTOR(data_read_width - 1 DOWNTO 0);
-    SIGNAL data_in3 : STD_LOGIC_VECTOR(data_read_width - 1 DOWNTO 0);
-    SIGNAL extension_data_in : STD_LOGIC_VECTOR(data_read_width * 2 - 1 DOWNTO 0);
+    SIGNAL data_in : STD_LOGIC_VECTOR(data_width * 4 - 1 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL data_in1 : STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+    SIGNAL data_in2 : STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+    SIGNAL data_in3 : STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+    SIGNAL data_in4 : STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+    SIGNAL extension_data_in : STD_LOGIC_VECTOR(data_width * 3 - 1 DOWNTO 0);
     --
     SIGNAL i_reset : STD_LOGIC;
     SIGNAL j_reset : STD_LOGIC;
@@ -83,21 +83,25 @@ ARCHITECTURE behavior OF datapath IS
     SIGNAL i_eq_0 : STD_LOGIC;
     SIGNAL j_eq_0 : STD_LOGIC;
     SIGNAL zero_cal_input_width : STD_LOGIC_VECTOR(input_width - 1 DOWNTO 0);
-    SIGNAL mem_num : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL mem_num : STD_LOGIC_VECTOR(2 DOWNTO 0);
     --
     SIGNAL data_in1_load : STD_LOGIC;
     SIGNAL data_in2_load : STD_LOGIC;
     SIGNAL data_in3_load : STD_LOGIC;
+    SIGNAL data_in4_load : STD_LOGIC;
 
     --
-    SIGNAL data_out1 : STD_LOGIC_VECTOR(data_write_width - 1 DOWNTO 0);
-    SIGNAL data_out2 : STD_LOGIC_VECTOR(data_write_width - 1 DOWNTO 0);
-    SIGNAL data_out3 : STD_LOGIC_VECTOR(data_write_width - 1 DOWNTO 0);
+    SIGNAL data_out1 : STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+    SIGNAL data_out2 : STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+    SIGNAL data_out3 : STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
+    SIGNAL data_out4 : STD_LOGIC_VECTOR(data_width - 1 DOWNTO 0);
     --
     SIGNAL j_cal : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
-    SIGNAL j_3 : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    --SIGNAL j_3 : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    SIGNAL j_4 : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
     SIGNAL n_cal : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
-    SIGNAL n_3 : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    --SIGNAL n_3 : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    SIGNAL n_4 : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
     SIGNAL extension : STD_LOGIC_VECTOR(address_width - 1 - input_width DOWNTO 0);
     SIGNAL one_cal_address_width : STD_LOGIC_VECTOR (address_width - 1 DOWNTO 0);
     --
@@ -106,10 +110,13 @@ ARCHITECTURE behavior OF datapath IS
     SIGNAL address_read_increase : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
     SIGNAL address_write_increase : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
     --
-    SIGNAL sup_data_in : STD_LOGIC_VECTOR(3 * data_read_width - 1 DOWNTO 0);
+    SIGNAL address_read_buf : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    SIGNAL address_write_buf : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    SIGNAL sup_data_in : STD_LOGIC_VECTOR(4 * data_width - 1 DOWNTO 0);
     SIGNAL sup_address_read : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
     SIGNAL sup_address_write : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
-    SIGNAL address_des_plus_3j : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    --SIGNAL address_des_plus_3j : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
+    SIGNAL address_des_plus_4j : STD_LOGIC_VECTOR(address_width - 1 DOWNTO 0);
 BEGIN
     data_out_reset <= data_out_set_0 OR clr;
     i_reset <= i_set_0 OR clr;
@@ -129,23 +136,25 @@ BEGIN
     GENERIC MAP(address_width)
     PORT MAP(clr, clk, address_des_load, address_des_i, address_des);
     data_out_regn : regn
-    GENERIC MAP(data_write_width * 3)
+    GENERIC MAP(data_width * 4)
     PORT MAP(data_out_reset, clk, data_out_load, data_out_sup, data_out);
 
     --
-    data_out1 <= data_out(data_write_width * 3 - 1 DOWNTO data_write_width * 2);
-    data_out2 <= data_out(data_write_width * 2 - 1 DOWNTO data_write_width);
-    data_out3 <= data_out(data_write_width - 1 DOWNTO 0);
+    data_out1 <= data_out(data_width * 4 - 1 DOWNTO data_width * 3);
+    data_out2 <= data_out(data_width * 3 - 1 DOWNTO data_width * 2);
+    data_out3 <= data_out(data_width * 2 - 1 DOWNTO data_width);
+    data_out4 <= data_out(data_width - 1 DOWNTO 0);
 
     --
-    data_write <= data_out2 WHEN mem_num = "01" ELSE
-        data_out3 WHEN mem_num = "10" ELSE
+    data_write <= data_out2 WHEN mem_num = "001" ELSE
+        data_out3 WHEN mem_num = "010" ELSE
+        data_out4 WHEN mem_num = "011" ELSE
         data_out1;
 
     --
     one_cal_input_width <= (input_width - 1 DOWNTO 1 => '0') & '1';
     data_out_adder : adder
-    GENERIC MAP(data_write_width * 3)
+    GENERIC MAP(data_width * 4)
     PORT MAP(data_in, data_out, data_out_sup);
     m_add_1_adder : adder
     GENERIC MAP(input_width)
@@ -163,8 +172,8 @@ BEGIN
     GENERIC MAP(input_width)
     PORT MAP(j_reset, clk, j_increase, n_add_1, j);
     mem_num_counter : counter
-    GENERIC MAP(2)
-    PORT MAP(mem_num_reset, clk, mem_num_increase, "11", mem_num);
+    GENERIC MAP(3)
+    PORT MAP(mem_num_reset, clk, mem_num_increase, "100", mem_num);
     --
     zero_cal_input_width <= (OTHERS => '0');
     i_compare_0 : compare
@@ -182,75 +191,89 @@ BEGIN
     GENERIC MAP(input_width)
     PORT MAP(j, n_add_1, j_get_max);
     mem_num_compare_max : compare
-    GENERIC MAP(2)
-    PORT MAP(mem_num, "11", mem_num_get_max);
+    GENERIC MAP(3)
+    PORT MAP(mem_num, "100", mem_num_get_max);
 
     --
-    data_in1_load <= (NOT mem_num(1)) AND (NOT mem_num(0)) AND sup_data_in_load;
-    data_in2_load <= (NOT mem_num(1)) AND (mem_num(0)) AND sup_data_in_load;
-    data_in3_load <= (mem_num(1)) AND (NOT mem_num(0)) AND sup_data_in_load;
+    data_in1_load <= (NOT mem_num(2)) AND (NOT mem_num(1)) AND (NOT mem_num(0)) AND sup_data_in_load;
+    data_in2_load <= (NOT mem_num(2)) AND (NOT mem_num(1)) AND (mem_num(0)) AND sup_data_in_load;
+    data_in3_load <= (NOT mem_num(2)) AND (mem_num(1)) AND (NOT mem_num(0)) AND sup_data_in_load;
+    data_in4_load <= (NOT mem_num(2)) AND (mem_num(1)) AND (mem_num(0))AND sup_data_in_load;
     data_in1_regn : regn
-    GENERIC MAP(data_read_width)
+    GENERIC MAP(data_width)
     PORT MAP(clr, clk, data_in1_load, data_read, data_in1);
     data_in2_regn : regn
-    GENERIC MAP(data_read_width)
+    GENERIC MAP(data_width)
     PORT MAP(clr, clk, data_in2_load, data_read, data_in2);
     data_in3_regn : regn
-    GENERIC MAP(data_read_width)
+    GENERIC MAP(data_width)
     PORT MAP(clr, clk, data_in3_load, data_read, data_in3);
+    data_in4_regn : regn
+    GENERIC MAP(data_width)
+    PORT MAP(clr, clk, data_in4_load, data_read, data_in4);
     --
     one_cal_address_width <= (address_width - 1 DOWNTO 1 => '0') & '1';
     extension <= (OTHERS => '0');
     j_cal <= extension & j;
     n_cal <= extension & n;
-    j_three_times : threetimes
+    --
+    j_4 <= j_cal(address_width - 3 DOWNTO 0) & "00";
+    n_4 <= n_cal(address_width - 3 DOWNTO 0) & "00";
+    address_des_plus_4j_adder : adder
     GENERIC MAP(address_width)
-    PORT MAP(j_cal, j_3);
-    n_three_times : threetimes
-    GENERIC MAP(address_width)
-    PORT MAP(n_cal, n_3);
-    address_des_plus_3j_adder : adder
-    GENERIC MAP(address_width)
-    PORT MAP(address_des, j_3, address_des_plus_3j);
+    PORT MAP(address_des, j_4, address_des_plus_4j);
+
+    --j_three_times : threetimes
+    --GENERIC MAP(address_width)
+    --PORT MAP(j_cal, j_3);
+    --n_three_times : threetimes
+    --GENERIC MAP(address_width)
+    --PORT MAP(n_cal, n_3);
+    --address_des_plus_3j_adder : adder
+    --GENERIC MAP(address_width)
+    --PORT MAP(address_des, j_3, address_des_plus_3j);
 
     --
+    address_read <= address_read_buf;
     address_read_regn : regn
     GENERIC MAP(address_width)
-    PORT MAP(clr, clk, address_read_load, sup_address_read, address_read);
+    PORT MAP(clr, clk, address_read_load, sup_address_read, address_read_buf);
+
+    address_write <= address_write_buf;
     address_write_regn : regn
     GENERIC MAP(address_width)
-    PORT MAP(clr, clk, address_write_load, sup_address_write, address_write);
+    PORT MAP(clr, clk, address_write_load, sup_address_write, address_write_buf);
 
     address_read_adder : adder
     GENERIC MAP(address_width)
-    PORT MAP(address_read, address_read_step, address_read_increase);
+    PORT MAP(address_read_buf, address_read_step, address_read_increase);
     address_write_adder : adder
     GENERIC MAP(address_width)
-    PORT MAP(address_write, address_write_step, address_write_increase);
+    PORT MAP(address_write_buf, address_write_step, address_write_increase);
 
     -- 
     sup_address_read <= address_read_increase WHEN address_read_sel = "01" ELSE
-        address_des_plus_3j WHEN address_read_sel = "10" ELSE
+        address_des_plus_4j WHEN address_read_sel = "10" ELSE
         address_des WHEN address_read_sel = "11" ELSE
         address_src;
     --
 
     sup_address_write <= address_write_increase WHEN address_write_sel = "01" ELSE
-        address_des_plus_3j WHEN address_write_sel = "10" ELSE
+        address_des_plus_4j WHEN address_write_sel = "10" ELSE
         address_des;
 
     --
-    address_write_step <= n_3 WHEN address_write_step_sel = '1' ELSE
+    address_write_step <= n_4 WHEN address_write_step_sel = '1' ELSE
         one_cal_address_width;
 
-    address_read_step <= n_3 WHEN address_read_step_sel = '1' ELSE
+    address_read_step <= n_4 WHEN address_read_step_sel = '1' ELSE
         one_cal_address_width;
     --
     extension_data_in <= (OTHERS => '0');
-    sup_data_in <= data_in1 & data_in2 & data_in3 WHEN data_in_sel = '1' ELSE
+    sup_data_in <= data_in1 & data_in2 & data_in3 & data_in4 WHEN data_in_sel = '1' ELSE
         extension_data_in & data_read;
     data_in_regn : regn
-    GENERIC MAP(data_read_width * 3)
+    GENERIC MAP(data_width * 4)
     PORT MAP(clr, clk, data_in_load, sup_data_in, data_in);
 
 END behavior;
