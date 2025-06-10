@@ -218,7 +218,7 @@ BEGIN
         '0';
     i_set_0 <= '1' WHEN state = s4 OR state = s23 ELSE
         '0';
-    j_set_0 <= '1' WHEN state = s6 OR state = s21 ELSE
+    j_set_0 <= '1' WHEN state = s6 OR state = s4 OR state = s21 ELSE
         '0';
     mem_num_set_0 <= '1' WHEN state = s13 OR state = s24 OR state = s31 ELSE
         '0';

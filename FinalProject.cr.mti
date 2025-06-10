@@ -119,15 +119,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity memory_tb
 -- Compiling architecture behavior of memory_tb
 
-} {} {}} E:/Working/FinalProject/mem_regn_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/mem_regn_tb.vhd
+} {} {}} E:/Working/FinalProject/datapath.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/datapath.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package mypackage
--- Loading package NUMERIC_STD
--- Compiling entity mem_regn_tb
--- Compiling architecture behavior of mem_regn_tb
+-- Compiling entity datapath
+-- Compiling architecture behavior of datapath
 
 } {} {}} E:/Working/FinalProject/threetimes_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/threetimes_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -139,14 +138,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity threetimes_tb
 -- Compiling architecture behavior of threetimes_tb
 
-} {} {}} E:/Working/FinalProject/datapath.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/datapath.vhd
+} {} {}} E:/Working/FinalProject/mem_regn_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/mem_regn_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package mypackage
--- Compiling entity datapath
--- Compiling architecture behavior of datapath
+-- Loading package NUMERIC_STD
+-- Compiling entity mem_regn_tb
+-- Compiling architecture behavior of mem_regn_tb
 
 } {} {}} E:/Working/FinalProject/adder.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/adder.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -158,15 +158,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity adder
 -- Compiling architecture behavior of adder
 
-} {} {}} E:/Working/FinalProject/regn_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/regn_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package mypackage
--- Compiling entity regn_tb
--- Compiling architecture behavior of regn_tb
-
 } {} {}} E:/Working/FinalProject/memory.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/memory.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -176,5 +167,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package NUMERIC_STD
 -- Compiling entity memory
 -- Compiling architecture behavior of memory
+
+} {} {}} E:/Working/FinalProject/regn_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Working/FinalProject/regn_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package mypackage
+-- Compiling entity regn_tb
+-- Compiling architecture behavior of regn_tb
 
 } {} {}}
