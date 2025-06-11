@@ -1,49 +1,6 @@
-# Compile of mypackage.vhd was successful.
-# Compile of compare.vhd was successful.
-# Compile of compare_tb.vhd was successful.
-# Compile of regn.vhd was successful.
-# Compile of regn_tb.vhd was successful.
-# Compile of counter.vhd was successful.
-# Compile of counter_tb.vhd was successful.
-# Compile of adder.vhd was successful.
-# Compile of adder_tb.vhd was successful.
-# Compile of datapath.vhd was successful.
-# Compile of mem_regn.vhd was successful.
-# Compile of mem_regn_tb.vhd was successful.
-# Compile of memory.vhd was successful.
-# Compile of memory_tb.vhd was successful.
-# Compile of controller.vhd was successful.
-# Compile of threetimes.vhd was successful.
-# Compile of threetimes_tb.vhd was successful.
-# Compile of integral.vhd was successful.
-# Compile of integral_tb.vhd was successful.
-# 19 compiles, 0 failed with no errors.
-vsim -gui work.counter_tb
-# vsim -gui work.counter_tb 
-# Start time: 20:49:45 on Jun 11,2025
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.mypackage
-# Loading work.counter_tb(behavior)
-# Loading ieee.std_logic_arith(body)
-# Loading ieee.std_logic_unsigned(body)
-# Loading ieee.numeric_std(body)
-# Loading work.counter(behavior)
-add wave -position insertpoint  \
-sim:/counter_tb/clk \
-sim:/counter_tb/clr \
-sim:/counter_tb/en \
-sim:/counter_tb/number \
-sim:/counter_tb/stop_number
-run
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /counter_tb/dut
 vsim -gui work.integral_tb
-# End time: 20:50:34 on Jun 11,2025, Elapsed time: 0:00:49
-# Errors: 0, Warnings: 3
 # vsim -gui work.integral_tb 
-# Start time: 20:50:34 on Jun 11,2025
+# Start time: 21:33:19 on Jun 11,2025
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -110,5 +67,3 @@ run
 #    Time: 0 ps  Iteration: 5  Instance: /integral_tb/memory_dut
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 20 ns  Iteration: 1  Instance: /integral_tb/memory_dut
-# End time: 21:07:27 on Jun 11,2025, Elapsed time: 0:16:53
-# Errors: 0, Warnings: 14
