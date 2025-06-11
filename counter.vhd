@@ -25,7 +25,7 @@ BEGIN
         IF (clr = '1') THEN
             number_proc <= 0;
         ELSIF (clk'event AND clk = '1' AND en = '1') THEN
-            IF (number_proc = stop_number) THEN
+            IF (number_proc = stop_number_proc) THEN
                 number_proc <= 0;
             ELSE
                 number_proc <= number_proc + 1;
